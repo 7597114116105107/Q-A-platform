@@ -40,7 +40,12 @@ async function request<T>(
 }
 
 export const api = {
-  register: (body: { name: string; email: string; password: string }) =>
+  register: (body: {
+    name: string;
+    email: string;
+    phone?: string;
+    password: string;
+  }) =>
     request<{ token: string; user: User }>("/auth/register", {
       method: "POST",
       body: JSON.stringify(body),
@@ -51,6 +56,15 @@ export const api = {
       method: "POST",
       body: JSON.stringify(body),
     }),
+
+  forgotPassword: (identifier: string) =>
+    request<{ message: string; generatedPassword: string }>(
+      "/auth/forgot-password",
+      {
+        method: "POST",
+        body: JSON.stringify({ identifier }),
+      }
+    ),
 
   getPlans: () =>
     request<{ plans: Plan[]; paymentWindow: PaymentWindow }>("/plans"),

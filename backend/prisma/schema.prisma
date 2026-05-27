@@ -29,8 +29,10 @@ enum PaymentStatus {
 model User {
   id           String         @id @default(cuid())
   email        String         @unique
+  phone        String?
   name         String
   passwordHash String
+  forgotPasswordRequestedAt DateTime?
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
   questions    Question[]

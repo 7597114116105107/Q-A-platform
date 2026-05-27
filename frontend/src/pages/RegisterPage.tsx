@@ -8,6 +8,7 @@ export default function RegisterPage() {
   const { login } = useAuth();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -18,7 +19,7 @@ export default function RegisterPage() {
     setLoading(true);
 
     try {
-      const res = await api.register({ name, email, password });
+      const res = await api.register({ name, email, phone, password });
       login(res.token, res.user);
       navigate("/dashboard");
     } catch (err) {
@@ -57,6 +58,17 @@ export default function RegisterPage() {
               onChange={(e) => setEmail(e.target.value)}
               required
               autoComplete="email"
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="phone">Phone number (optional)</label>
+            <input
+              id="phone"
+              type="tel"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              placeholder="10 to 15 digits"
+              pattern="[0-9]{10,15}"
             />
           </div>
           <div className="form-group">
